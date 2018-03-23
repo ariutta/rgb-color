@@ -139,6 +139,15 @@ describe('rgbcolor', () => {
           r: 255, g: 238, b: 102, a: 0.5019607843137255,
         },
       },
+      {
+        input: 'rgba(255, 238, 102, 0.5)',
+        expectedHex: '#ffee6680',
+        expectedRGB: 'rgba(255, 238, 102, 0.5)',
+        expectedValid: true,
+        expectedObject: {
+          r: 255, g: 238, b: 102, a: 0.5,
+        },
+      },
     ];
 
     tests.forEach((test) => {
