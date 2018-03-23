@@ -22,8 +22,8 @@ const colorDefs = [
     },
   },
   {
-    re: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d.*)\)$/,
-    example: ['rgb(123, 234, 45, .5)', 'rgb(255,234,245, 0.20)'],
+    re: /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d.*)\)$/,
+    example: ['rgba(123, 234, 45, .5)', 'rgba(255,234,245, 0.20)'],
     process(bits) {
       return [
         parseInt(bits[1], 10),

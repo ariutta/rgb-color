@@ -121,7 +121,7 @@ describe('rgbcolor', () => {
       {
         input: '#336699FF',
         expectedHex: '#336699ff',
-        expectedRGB: 'rgb(51, 102, 153, 1)',
+        expectedRGB: 'rgba(51, 102, 153, 1)',
         expectedValid: true,
         expectedObject: {
           r: 51,
@@ -133,7 +133,7 @@ describe('rgbcolor', () => {
       {
         input: 'ffee6680',
         expectedHex: '#ffee6680',
-        expectedRGB: 'rgb(255, 238, 102, 0.5019607843137255)',
+        expectedRGB: 'rgba(255, 238, 102, 0.5019607843137255)',
         expectedValid: true,
         expectedObject: {
           r: 255, g: 238, b: 102, a: 0.5019607843137255,

@@ -73,7 +73,7 @@ class RGBColor {
   rgb() {
     const { r, g, b, a } = this; // eslint-disable-line object-curly-newline
     if (a) {
-      return `rgb(${[r, g, b, a].join(', ')})`;
+      return `rgba(${[r, g, b, a].join(', ')})`;
     }
     return `rgb(${[r, g, b].join(', ')})`;
   }
