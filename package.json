@@ -21,9 +21,15 @@
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "rules": {
+      "eqeqeq": ["error", "always", {"null": "ignore"}]
+    }
   },
-  "dependencies": {},
+  "dependencies": {
+    "hex-rgb": "^2.0.0",
+    "rgb-hex": "^2.1.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
