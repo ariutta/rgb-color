@@ -1,8 +1,10 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.rgbcolor = factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('rgb-hex')) :
+  typeof define === 'function' && define.amd ? define(['rgb-hex'], factory) :
+  (global.rgbcolor = factory(global.rgbHex));
+}(this, (function (rgbHex) { 'use strict';
+
+  rgbHex = rgbHex && rgbHex.hasOwnProperty('default') ? rgbHex['default'] : rgbHex;
 
   var namedColors = {
     aliceblue: 'f0f8ff',
@@ -163,6 +165,18 @@
       return [parseInt(bits[1], 16), parseInt(bits[2], 16), parseInt(bits[3], 16)];
     }
   }, {
+    re: /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d.*)\)$/,
+    example: ['rgba(123, 234, 45, .5)', 'rgba(255,234,245, 0.20)'],
+    process: function process(bits) {
+      return [parseInt(bits[1], 10), parseInt(bits[2], 10), parseInt(bits[3], 10), parseInt(bits[4], 10) / 255.0];
+    }
+  }, {
+    re: /^(\w{2})(\w{2})(\w{2})(\w{2})$/,
+    example: ['#00ff00ff', '#3366992f'],
+    process: function process(bits) {
+      return [parseInt(bits[1], 16), parseInt(bits[2], 16), parseInt(bits[3], 16), parseInt(bits[4], 16) / 255.0];
+    }
+  }, {
     re: /^(\w{1})(\w{1})(\w{1})$/,
     example: ['#fb0', 'f0f'],
     process: function process(bits) {
@@ -170,9 +184,13 @@
     }
   }];
 
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
   var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
   var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+  function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -198,7 +216,7 @@
       // strip any leading #
       if (colorString.charAt(0) === '#') {
         // remove # if any
-        colorString = colorString.substr(1, 6);
+        colorString = colorString.substr(1, 8);
       }
 
       colorString = colorString.replace(/ /g, '').toLowerCase();
@@ -217,31 +235,37 @@
         if (bits) {
           var _def$process = def.process(bits);
 
-          var _def$process2 = _slicedToArray(_def$process, 3);
+          var _def$process2 = _slicedToArray(_def$process, 4);
 
           this.r = _def$process2[0];
           this.g = _def$process2[1];
           this.b = _def$process2[2];
+          this.a = _def$process2[3];
 
           this.ok = true;
         }
       }
 
       // validate/cleanup values
-      if (this.r < 0 || Number.isNaN(this.r) || this.r === undefined) {
+      if (this.r < 0 || Number.isNaN(this.r) || this.r == null) {
         this.r = 0;
       } else if (this.r > 255) {
         this.r = 255;
       }
-      if (this.g < 0 || Number.isNaN(this.g) || this.g === undefined) {
+      if (this.g < 0 || Number.isNaN(this.g) || this.g == null) {
         this.g = 0;
       } else if (this.g > 255) {
         this.g = 255;
       }
-      if (this.b < 0 || Number.isNaN(this.b) || this.b === undefined) {
+      if (this.b < 0 || Number.isNaN(this.b) || this.b == null) {
         this.b = 0;
       } else if (this.b > 255) {
         this.b = 255;
+      }
+      if (this.a < 0 || Number.isNaN(this.a)) {
+        this.a = undefined;
+      } else if (this.a > 255) {
+        this.a = 1;
       }
     }
 
@@ -253,23 +277,29 @@
     }, {
       key: 'rgb',
       value: function rgb() {
-        return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+        var r = this.r,
+            g = this.g,
+            b = this.b,
+            a = this.a; // eslint-disable-line object-curly-newline
+
+        if (a) {
+          return 'rgba(' + [r, g, b, a].join(', ') + ')';
+        }
+        return 'rgb(' + [r, g, b].join(', ') + ')';
       }
     }, {
       key: 'hex',
       value: function hex() {
-        var r = this.r.toString(16);
-        var g = this.g.toString(16);
-        var b = this.b.toString(16);
-        if (r.length === 1) r = '0' + r;
-        if (g.length === 1) g = '0' + g;
-        if (b.length === 1) b = '0' + b;
-        return '#' + r + g + b;
+        return '#' + rgbHex(this.r, this.g, this.b, this.a);
       }
     }, {
       key: 'channels',
       value: function channels() {
-        return { r: this.r, g: this.g, b: this.b };
+        var ok = this.ok,
+            a = this.a,
+            rest = _objectWithoutProperties(this, ['ok', 'a']);
+
+        return a ? _extends({ a: a }, rest) : rest;
       }
     }]);
 
