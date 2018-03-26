@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "keywords": [],
-  "main": "rgb-color.js",
+  "main": "dist/rgb-color.js",
   "dependencies": {
     "rgb-hex": "^2.1.0"
   }
