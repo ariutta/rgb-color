@@ -1,3 +1,4 @@
+import rgbHex from 'rgb-hex';
 import namedColors from './named-colors';
 import colorDefs from './color-defs';
 
@@ -18,8 +19,9 @@ class RGBColor {
     }
 
     // strip any leading #
-    if (colorString.charAt(0) === '#') { // remove # if any
-      colorString = colorString.substr(1, 6);
+    if (colorString.charAt(0) === '#') {
+      // remove # if any
+      colorString = colorString.substr(1, 8);
     }
 
     colorString = colorString.replace(/ /g, '').toLowerCase();
@@ -36,26 +38,31 @@ class RGBColor {
       const def = colorDefs[i];
       const bits = def.re.exec(colorString);
       if (bits) {
-        ([this.r, this.g, this.b] = def.process(bits));
+        [this.r, this.g, this.b, this.a] = def.process(bits);
         this.ok = true;
       }
     }
 
     // validate/cleanup values
-    if (this.r < 0 || Number.isNaN(this.r) || this.r === undefined) {
+    if (this.r < 0 || Number.isNaN(this.r) || this.r == null) {
       this.r = 0;
     } else if (this.r > 255) {
       this.r = 255;
     }
-    if (this.g < 0 || Number.isNaN(this.g) || this.g === undefined) {
+    if (this.g < 0 || Number.isNaN(this.g) || this.g == null) {
       this.g = 0;
     } else if (this.g > 255) {
       this.g = 255;
     }
-    if (this.b < 0 || Number.isNaN(this.b) || this.b === undefined) {
+    if (this.b < 0 || Number.isNaN(this.b) || this.b == null) {
       this.b = 0;
     } else if (this.b > 255) {
       this.b = 255;
+    }
+    if (this.a < 0 || Number.isNaN(this.a)) {
+      this.a = undefined;
+    } else if (this.a > 255) {
+      this.a = 1;
     }
   }
 
@@ -64,21 +71,20 @@ class RGBColor {
   }
 
   rgb() {
-    return `rgb(${this.r}, ${this.g}, ${this.b})`;
+    const { r, g, b, a } = this; // eslint-disable-line object-curly-newline
+    if (a) {
+      return `rgba(${[r, g, b, a].join(', ')})`;
+    }
+    return `rgb(${[r, g, b].join(', ')})`;
   }
 
   hex() {
-    let r = this.r.toString(16);
-    let g = this.g.toString(16);
-    let b = this.b.toString(16);
-    if (r.length === 1) r = `0${r}`;
-    if (g.length === 1) g = `0${g}`;
-    if (b.length === 1) b = `0${b}`;
-    return `#${r}${g}${b}`;
+    return `#${rgbHex(this.r, this.g, this.b, this.a)}`;
   }
 
   channels() {
-    return { r: this.r, g: this.g, b: this.b };
+    const { ok, a, ...rest } = this;
+    return a ? { a, ...rest } : rest;
   }
 }
 

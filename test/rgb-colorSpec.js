@@ -11,58 +11,147 @@ import { expect } from 'chai';
 import rgbcolor from '../src/rgb-color';
 
 describe('rgbcolor', () => {
-
   describe('hex(), rgb(), channels()', () => {
     const tests = [
       {
-        input: '#', expectedHex: '#000000', expectedRGB: 'rgb(0, 0, 0)', expectedValid: false, expectedObject: { r: 0, g: 0, b: 0 },
+        input: '#',
+        expectedHex: '#000000',
+        expectedRGB: 'rgb(0, 0, 0)',
+        expectedValid: false,
+        expectedObject: { r: 0, g: 0, b: 0 },
       },
       {
-        input: '#ijm', expectedHex: '#000000', expectedRGB: 'rgb(0, 0, 0)', expectedValid: true, expectedObject: { r: 0, g: 0, b: 0 },
+        input: '#ijm',
+        expectedHex: '#000000',
+        expectedRGB: 'rgb(0, 0, 0)',
+        expectedValid: true,
+        expectedObject: { r: 0, g: 0, b: 0 },
       },
       {
-        input: 'aqua', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+        input: 'aqua',
+        expectedHex: '#00ffff',
+        expectedRGB: 'rgb(0, 255, 255)',
+        expectedValid: true,
+        expectedObject: { r: 0, g: 255, b: 255 },
       },
       {
-        input: 'mistyrose', expectedHex: '#ffe4e1', expectedRGB: 'rgb(255, 228, 225)', expectedValid: true, expectedObject: { r: 255, g: 228, b: 225 },
+        input: 'mistyrose',
+        expectedHex: '#ffe4e1',
+        expectedRGB: 'rgb(255, 228, 225)',
+        expectedValid: true,
+        expectedObject: { r: 255, g: 228, b: 225 },
       },
       {
-        input: 'yellowgreen', expectedHex: '#9acd32', expectedRGB: 'rgb(154, 205, 50)', expectedValid: true, expectedObject: { r: 154, g: 205, b: 50 },
+        input: 'yellowgreen',
+        expectedHex: '#9acd32',
+        expectedRGB: 'rgb(154, 205, 50)',
+        expectedValid: true,
+        expectedObject: { r: 154, g: 205, b: 50 },
       },
       {
-        input: '#fff', expectedHex: '#ffffff', expectedRGB: 'rgb(255, 255, 255)', expectedValid: true, expectedObject: { r: 255, g: 255, b: 255 },
+        input: '#fff',
+        expectedHex: '#ffffff',
+        expectedRGB: 'rgb(255, 255, 255)',
+        expectedValid: true,
+        expectedObject: { r: 255, g: 255, b: 255 },
       },
       {
-        input: '000', expectedHex: '#000000', expectedRGB: 'rgb(0, 0, 0)', expectedValid: true, expectedObject: { r: 0, g: 0, b: 0 },
+        input: '000',
+        expectedHex: '#000000',
+        expectedRGB: 'rgb(0, 0, 0)',
+        expectedValid: true,
+        expectedObject: { r: 0, g: 0, b: 0 },
       },
       {
-        input: 'rgb(0, 23, 255)', expectedHex: '#0017ff', expectedRGB: 'rgb(0, 23, 255)', expectedValid: true, expectedObject: { r: 0, g: 23, b: 255 },
+        input: 'rgb(0, 23, 255)',
+        expectedHex: '#0017ff',
+        expectedRGB: 'rgb(0, 23, 255)',
+        expectedValid: true,
+        expectedObject: { r: 0, g: 23, b: 255 },
       },
       {
-        input: '#336699', expectedHex: '#336699', expectedRGB: 'rgb(51, 102, 153)', expectedValid: true, expectedObject: { r: 51, g: 102, b: 153 },
+        input: '#336699',
+        expectedHex: '#336699',
+        expectedRGB: 'rgb(51, 102, 153)',
+        expectedValid: true,
+        expectedObject: { r: 51, g: 102, b: 153 },
       },
       {
-        input: 'ffee66', expectedHex: '#ffee66', expectedRGB: 'rgb(255, 238, 102)', expectedValid: true, expectedObject: { r: 255, g: 238, b: 102 },
+        input: 'ffee66',
+        expectedHex: '#ffee66',
+        expectedRGB: 'rgb(255, 238, 102)',
+        expectedValid: true,
+        expectedObject: { r: 255, g: 238, b: 102 },
       },
       {
-        input: 'fb0', expectedHex: '#ffbb00', expectedRGB: 'rgb(255, 187, 0)', expectedValid: true, expectedObject: { r: 255, g: 187, b: 0 },
+        input: 'fb0',
+        expectedHex: '#ffbb00',
+        expectedRGB: 'rgb(255, 187, 0)',
+        expectedValid: true,
+        expectedObject: { r: 255, g: 187, b: 0 },
       },
       {
-        input: 'red', expectedHex: '#ff0000', expectedRGB: 'rgb(255, 0, 0)', expectedValid: true, expectedObject: { r: 255, g: 0, b: 0 },
+        input: 'red',
+        expectedHex: '#ff0000',
+        expectedRGB: 'rgb(255, 0, 0)',
+        expectedValid: true,
+        expectedObject: { r: 255, g: 0, b: 0 },
       },
       {
-        input: 'darkblue', expectedHex: '#00008b', expectedRGB: 'rgb(0, 0, 139)', expectedValid: true, expectedObject: { r: 0, g: 0, b: 139 },
+        input: 'darkblue',
+        expectedHex: '#00008b',
+        expectedRGB: 'rgb(0, 0, 139)',
+        expectedValid: true,
+        expectedObject: { r: 0, g: 0, b: 139 },
       },
       {
-        input: 'cadet blue', expectedHex: '#5f9ea0', expectedRGB: 'rgb(95, 158, 160)', expectedValid: true, expectedObject: { r: 95, g: 158, b: 160 },
+        input: 'cadet blue',
+        expectedHex: '#5f9ea0',
+        expectedRGB: 'rgb(95, 158, 160)',
+        expectedValid: true,
+        expectedObject: { r: 95, g: 158, b: 160 },
       },
       {
-        input: 'rgb(900, 300, 257)', expectedHex: '#ffffff', expectedRGB: 'rgb(255, 255, 255)', expectedValid: true, expectedObject: { r: 255, g: 255, b: 255 },
+        input: 'rgb(900, 300, 257)',
+        expectedHex: '#ffffff',
+        expectedRGB: 'rgb(255, 255, 255)',
+        expectedValid: true,
+        expectedObject: { r: 255, g: 255, b: 255 },
+      },
+      {
+        input: '#336699FF',
+        expectedHex: '#336699ff',
+        expectedRGB: 'rgba(51, 102, 153, 1)',
+        expectedValid: true,
+        expectedObject: {
+          r: 51,
+          g: 102,
+          b: 153,
+          a: 1,
+        },
+      },
+      {
+        input: 'ffee6680',
+        expectedHex: '#ffee6680',
+        expectedRGB: 'rgba(255, 238, 102, 0.5019607843137255)',
+        expectedValid: true,
+        expectedObject: {
+          r: 255, g: 238, b: 102, a: 0.5019607843137255,
+        },
+      },
+      {
+        input: 'rgba(255, 238, 102, 0.5)',
+        expectedHex: '#ffee6680',
+        expectedRGB: 'rgba(255, 238, 102, 0.5)',
+        expectedValid: true,
+        expectedObject: {
+          r: 255, g: 238, b: 102, a: 0.5,
+        },
       },
     ];
 
     tests.forEach((test) => {
-      it(`should return correct hex(), rgb() and object() representation of ${test.input}`, () => {
+      it(`${test.input}: should return correct hex(), rgb() and object()`, () => {
         const color = rgbcolor(test.input);
         expect(color.isValid()).to.be.equal(test.expectedValid);
         expect(color.hex()).to.be.equal(test.expectedHex);
@@ -70,7 +159,6 @@ describe('rgbcolor', () => {
         expect(color.channels()).to.deep.equal(test.expectedObject);
       });
     });
-
   });
 
   describe('isValid() === false', () => {
@@ -81,5 +169,4 @@ describe('rgbcolor', () => {
       });
     });
   });
-
 });
