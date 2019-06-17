@@ -22,7 +22,11 @@ class RGBColor {
       colorString = colorString.substr(1, 6);
     }
 
-    colorString = colorString.replace(/ /g, '').toLowerCase();
+    colorString = colorString.trim().toLowerCase();
+    colorString = colorString.replace(/\s\s+/g, ' ');
+    if (colorString.indexOf('(') === -1) {
+      colorString = colorString.replace(/ /g, '');
+    }
 
     // before getting into regexps, try simple matches
     // and overwrite the input

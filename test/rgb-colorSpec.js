@@ -59,6 +59,30 @@ describe('rgbcolor', () => {
       {
         input: 'rgb(900, 300, 257)', expectedHex: '#ffffff', expectedRGB: 'rgb(255, 255, 255)', expectedValid: true, expectedObject: { r: 255, g: 255, b: 255 },
       },
+      {
+        input: 'hsl(180, 100%, 50%)', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+      },
+      {
+        input: 'hsl(180 100% 50%)', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+      },
+      {
+        input: 'hsl(240, 100%, 50%)', expectedHex: '#0000ff', expectedRGB: 'rgb(0, 0, 255)', expectedValid: true, expectedObject: { r: 0, g: 0, b: 255 },
+      },
+      {
+        input: 'hsl(300, 100%, 50%)', expectedHex: '#ff00ff', expectedRGB: 'rgb(255, 0, 255)', expectedValid: true, expectedObject: { r: 255, g: 0, b: 255 },
+      },
+      {
+        input: 'hsl(6.8rad,100%,50%)', expectedHex: '#ff8000', expectedRGB: 'rgb(255, 128, 0)', expectedValid: true, expectedObject: { r: 255, g: 128, b: 0 },
+      },
+      {
+        input: 'hsl(90deg,100%,50%)', expectedHex: '#80ff00', expectedRGB: 'rgb(128, 255, 0)', expectedValid: true, expectedObject: { r: 128, g: 255, b: 0 },
+      },
+      {
+        input: 'hsl(2.35rad,100%,50%)', expectedHex: '#00ff40', expectedRGB: 'rgb(0, 255, 64)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 64 },
+      },
+      {
+        input: 'hsl(0.1turn,100%,50%)', expectedHex: '#ff9900', expectedRGB: 'rgb(255, 153, 0)', expectedValid: true, expectedObject: { r: 255, g: 153, b: 0 },
+      },
     ];
 
     tests.forEach((test) => {
