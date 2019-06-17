@@ -46,7 +46,7 @@ const colorDefs = [
         r = 0; g = x; b = c;
       } else if (h >= 240 && h < 300) {
         r = x; g = 0; b = c;
-      } else if (h >= 300 && h < 360) {
+      } else { // if (h >= 300 && h < 360) { // cover doesn't think this was run, but it is. So try else instead
         r = c; g = 0; b = x;
       }
 
