@@ -158,9 +158,10 @@
     }
   }, {
     re: /^hsl\(((((([12]?[1-9]?\d)|[12]0\d|(3[0-5]\d))(\.\d+)?)|(\.\d+))(deg)?|(0|0?\.\d+)turn|(([0-6](\.\d+)?)|(\.\d+))rad)((,\s?(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2}|(\s(([1-9]?\d(\.\d+)?)|100|(\.\d+))%){2})\)$/i,
-    example: ['hsl(180,100%,50%)', 'hsl(90, 90%, 30%)'],
+    example: ['hsl(180,100%,50%)', 'hsl(90 90% 30%)'],
     process: function process(bits) {
       var hsl = bits[0];
+      console.log('in', bits[0]);
       var sep = hsl.indexOf(',') > -1 ? ',' : ' ';
       hsl = hsl.substr(4).split(')')[0].split(sep);
 
@@ -198,6 +199,7 @@
       g = Math.round((g + m) * 255);
       b = Math.round((b + m) * 255);
 
+      console.log('out', h, r, g, b);
       return [r, g, b];
     }
   }, {
@@ -245,7 +247,10 @@
         colorString = colorString.substr(1, 6);
       }
 
-      colorString = colorString.replace(/ /g, '').toLowerCase();
+      colorString = colorString.trim().toLowerCase();
+      if (colorString.indexOf('(') === -1) {
+        colorString = colorString.replace(/ /g, '');
+      }
 
       // before getting into regexps, try simple matches
       // and overwrite the input
