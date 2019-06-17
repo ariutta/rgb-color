@@ -23,8 +23,9 @@ class RGBColor {
     }
 
     colorString = colorString.trim().toLowerCase();
+    colorString = colorString.replace(/\s\s+/g, ' ');
     if (colorString.indexOf('(') === -1) {
-      colorString = colorString.replace(/ /g, '')
+      colorString = colorString.replace(/ /g, '');
     }
 
     // before getting into regexps, try simple matches
