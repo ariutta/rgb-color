@@ -59,6 +59,18 @@ describe('rgbcolor', () => {
       {
         input: 'rgb(900, 300, 257)', expectedHex: '#ffffff', expectedRGB: 'rgb(255, 255, 255)', expectedValid: true, expectedObject: { r: 255, g: 255, b: 255 },
       },
+      {
+        input: 'hsl(180, 100%, 50%)', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+      },
+      {
+        input: 'hsl(180deg,100%,50%)', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+      },
+      {
+        input: 'hsl(3.14rad,100%,50%)', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+      },
+      {
+        input: 'hsl(0.5turn,100%,50%)', expectedHex: '#00ffff', expectedRGB: 'rgb(0, 255, 255)', expectedValid: true, expectedObject: { r: 0, g: 255, b: 255 },
+      },
     ];
 
     tests.forEach((test) => {
